@@ -41,12 +41,13 @@ async function convert(e) {
   form.style.display = "none";
   imageBox.style.display = "none";
 
-  await gifConverter(input, output, handleProgress);
-  progress.textContent = `Successfully converted file to gif. File saved to ${output}`;
-}
-
-function handleProgress(percent) {
-  progress.innerHTML = `Progress: ${percent.toFixed(2)}%`;
+  progress.innerHTML = "Converting file...";
+  const res = await gifConverter(input, output);
+  if (res) {
+    progress.textContent = `Successfully converted file to gif. File saved to ${output}`;
+  } else {
+    progress.textContent = `Something went wrong. Check console (ctrl+shift+i)`;
+  }
 }
 
 img.addEventListener("change", loadMenu);

@@ -15,7 +15,7 @@ function createMainWindow() {
     },
   });
   mainWindow.maximize();
-  Menu.setApplicationMenu(null);
+  // Menu.setApplicationMenu(null);
 
   // Open dev mode
   if (isDev) {

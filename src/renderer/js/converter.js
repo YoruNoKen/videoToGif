@@ -1,29 +1,26 @@
-var ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
-var ffprobePath = require("@ffprobe-installer/ffprobe").path;
-var ffmpeg = require("fluent-ffmpeg");
-ffmpeg.setFfmpegPath(ffmpegPath);
-ffmpeg.setFfprobePath(ffprobePath);
+const { exec } = require("child_process");
 
-async function gifConverter(inputPath, outputPath, progressCallback) {
+function executeCommand(command) {
   return new Promise((resolve, reject) => {
-    ffmpeg.setFfmpegPath(ffmpegPath);
-    ffmpeg.setFfprobePath(ffprobePath);
-
-    ffmpeg(inputPath)
-      .output(outputPath)
-      .fps(1)
-      .on("progress", function (progress) {
-        if (progressCallback && typeof progressCallback === "function") {
-          progressCallback(progress.percent);
-        }
-      })
-      .on("end", function () {
-        resolve();
-      })
-      .on("error", function (err) {
-        reject(err);
-      })
-      .run();
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve({ stdout, stderr });
+      }
+    });
   });
 }
+
+async function gifConverter(inputPath, outputPath) {
+  try {
+    const command = `ffmpeg -i "${inputPath}" -vf "fps=10,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 "${outputPath}"`;
+    await executeCommand(command);
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
 module.exports = { gifConverter };
