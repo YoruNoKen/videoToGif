@@ -1,0 +1,20 @@
+{
+  "name": "gifmaker",
+  "productName": "mp4 to gif",
+  "version": "1.0.0",
+  "description": "something something",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffprobe-installer/ffprobe": "^2.1.1",
+    "electron": "^25.3.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "pkg": "^5.8.1"
+  }
+}
