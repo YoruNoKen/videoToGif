@@ -22,7 +22,7 @@ function createMainWindow() {
     mainWindow.webContents.openDevTools();
   }
 
-  mainWindow.loadFile(path.join(__dirname, "./renderer/index.html"));
+  mainWindow.loadFile(path.join(__dirname, "./renderer/main.html"));
 }
 
 app.on("ready", () => {
@@ -39,5 +39,4 @@ app.on("window-all-closed", () => {
   if (!isMac) {
     app.quit();
   }
-  process.exit(1);
 });
